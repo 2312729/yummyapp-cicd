@@ -27,29 +27,29 @@ class TestEasyLevel(unittest.TestCase):
 
 
 class TestMediumLevel(unittest.TestCase):
-    def test_apply_valid_promo_code(self):
+    def test_TC_01_apply_valid_promo_code_online(self):
         self.assertEqual(YummyApp().apply_promo_code(100000, "GIAM10"), 90000)
 
-    def test_apply_new_os_promo_code(self):
-        self.assertEqual(
-            YummyApp(os_version=15).apply_promo_code(100000, "NEW_OS_ONLY"),
-            80000,
-        )
-
-    def test_reject_promo_code_when_offline(self):
+    def test_TC_02_apply_promo_code_offline_raises_connection_error(self):
         with self.assertRaises(ConnectionError):
             YummyApp(network_status="offline").apply_promo_code(
                 100000, "GIAM10"
             )
 
-    def test_reject_promo_code_on_old_os(self):
+    def test_TC_03_apply_new_os_promo_code_on_os_15(self):
+        self.assertEqual(
+            YummyApp(os_version=15).apply_promo_code(100000, "NEW_OS_ONLY"),
+            80000,
+        )
+
+    def test_TC_04_reject_promo_code_on_os_14(self):
         with self.assertRaises(ValueError):
             YummyApp(os_version=14).apply_promo_code(100000, "NEW_OS_ONLY")
 
 
 class TestHardLevel(unittest.TestCase):
     @patch("yummy_app.gps_service.get_current_location")
-    def test_get_nearby_restaurants_inside_known_area(self, get_location):
+    def test_TC_05_get_restaurants_inside_known_area(self, get_location):
         get_location.return_value = (10.0, 105.0)
         self.assertEqual(
             YummyApp().get_nearby_restaurants(),
@@ -57,12 +57,12 @@ class TestHardLevel(unittest.TestCase):
         )
 
     @patch("yummy_app.gps_service.get_current_location")
-    def test_get_nearby_restaurants_outside_known_area(self, get_location):
+    def test_TC_06_get_restaurants_outside_known_area(self, get_location):
         get_location.return_value = (20.0, 110.0)
         self.assertEqual(YummyApp().get_nearby_restaurants(), [])
 
     @patch("yummy_app.gps_service.get_current_location")
-    def test_get_nearby_restaurants_when_signal_is_lost(self, get_location):
+    def test_TC_07_get_restaurants_when_signal_is_lost(self, get_location):
         get_location.side_effect = gps_service.GPSSignalLostError
         self.assertEqual(
             YummyApp().get_nearby_restaurants(),
