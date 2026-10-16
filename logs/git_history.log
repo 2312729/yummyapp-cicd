@@ -1,0 +1,10 @@
+﻿* d8c53e2 - 2312729 – Nguyen Van Quoc (2026-10-16) : Restore valid application syntax
+* 9c49871 - 2312729 – Nguyen Van Quoc (2026-10-16) : Intentionally break build to verify linter
+* 858dc88 - 2312729 – Nguyen Van Quoc (2026-10-16) : Upload HTML coverage report artifact
+* 1a566ad - 2312729 – Nguyen Van Quoc (2026-10-16) : Name test scenarios with TC identifiers
+* 8d86272 - 2312729 – Nguyen Van Quoc (2026-10-16) : Add promo and GPS mocking scenarios
+* 957dc74 - 2312729 – Nguyen Van Quoc (2026-10-16) : Add CI lint and coverage quality gate
+* 8f8e149 - 2312729 – Nguyen Van Quoc (2026-10-16) : Update local test coverage log
+* f88fe3d - 2312729 – Nguyen Van Quoc (2026-10-16) : Add YummyApp CI workflow
+* 041f76c - 2312729 – Nguyen Van Quoc (2026-10-16) : Ignore local test artifacts
+* cf1c788 - 2312729 – Nguyen Van Quoc (2026-10-16) : Initial YummyApp CI/CD project
