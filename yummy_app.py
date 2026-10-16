@@ -1,10 +1,6 @@
 import gps_service
 
 
-def intentionally_broken_function(
-    """Temporary syntax error used to verify the CI linter gate."""
-
-
 MENU = {
     "pho": 50000,
     "bun": 45000,
