@@ -48,11 +48,20 @@ class TestMediumLevel(unittest.TestCase):
 
 
 class TestHardLevel(unittest.TestCase):
-    def test_get_nearby_restaurants(self):
-        restaurants = YummyApp().get_nearby_restaurants()
-        self.assertEqual(len(restaurants), 2)
+    @patch("yummy_app.gps_service.get_current_location")
+    def test_get_nearby_restaurants_inside_known_area(self, get_location):
+        get_location.return_value = (10.0, 105.0)
+        self.assertEqual(
+            YummyApp().get_nearby_restaurants(),
+            ["Nha hang Pho Ly Quoc Su", "Bun cha Huong Lien"],
+        )
 
-    @patch("gps_service.get_current_location")
+    @patch("yummy_app.gps_service.get_current_location")
+    def test_get_nearby_restaurants_outside_known_area(self, get_location):
+        get_location.return_value = (20.0, 110.0)
+        self.assertEqual(YummyApp().get_nearby_restaurants(), [])
+
+    @patch("yummy_app.gps_service.get_current_location")
     def test_get_nearby_restaurants_when_signal_is_lost(self, get_location):
         get_location.side_effect = gps_service.GPSSignalLostError
         self.assertEqual(
